@@ -1,15 +1,14 @@
-
 import React from 'react';
 import { MOCK_SALESMEN } from '../constants';
 
 const Hero: React.FC = () => {
   return (
     <section className="relative h-[85vh] md:h-screen flex items-center overflow-hidden">
-      {/* Background Image - Premium Lexus/Toyota focus */}
+      {/* Background Image - Black Lexus SUV Focus */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80&w=2000" 
-          alt="Lexus SUV" 
+          src="/lexus.png" 
+          alt="Black Lexus SUV" 
           className="w-full h-full object-cover object-center"
         />
         <div className="absolute inset-0 hero-gradient"></div>
@@ -24,12 +23,13 @@ const Hero: React.FC = () => {
           
           <h1 className="text-5xl md:text-7xl font-extrabold leading-[1.1] mb-6 drop-shadow-lg">
             22 Years of Trust. <br/>
-            <span className="text-blue-400">Family Owned.</span>
+            <span className="text-blue-400">Toyota & Lexus Authority.</span>
           </h1>
           
           <p className="text-lg md:text-xl text-slate-200 mb-10 leading-relaxed font-medium">
-            Maplewood’s premier destination for high-quality pre-owned Japanese imports. 
-            Toyota, Lexus, and Honda experts providing a stress-free shopping experience.
+            Maplewood's premier destination for high-quality pre-owned imports. 
+            90% of our inventory is meticulously selected Toyota and Lexus models. 
+            Experience the Lexdan difference today.
           </p>
 
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
