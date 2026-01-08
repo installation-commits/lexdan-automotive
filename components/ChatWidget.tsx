@@ -156,3 +156,36 @@ const ChatWidget: React.FC = () => {
 };
 
 export default ChatWidget;
+import React from 'react';
+import { MOCK_SALESMEN } from '../constants';
+
+const Messenger = ({ selectedCar }) => {
+  const startChat = (salesman) => {
+    // This triggers a real SMS text message to the salesman's lead line
+    const message = `Hi ${salesman.name}, I'm interested in the ${selectedCar || 'vehicle'} on your website!`;
+    window.location.href = `sms:${salesman.phone}?body=${encodeURIComponent(message)}`;
+  };
+
+  return (
+    <div className="fixed bottom-6 right-6 z-50">
+      <div className="bg-white rounded-3xl shadow-2xl p-6 border border-slate-100 max-w-xs">
+        <h3 className="font-black text-lg mb-4 text-[#002B5B]">Chat with an Expert</h3>
+        <div className="space-y-3">
+          {MOCK_SALESMEN.map(s => (
+            <button 
+              key={s.id}
+              onClick={() => startChat(s)}
+              className="w-full flex items-center p-3 hover:bg-slate-50 rounded-2xl transition-all border border-transparent hover:border-slate-200"
+            >
+              <img src={s.avatar} className="w-12 h-12 rounded-full object-cover mr-3" alt={s.name} />
+              <div className="text-left">
+                <p className="font-bold text-sm text-slate-900">{s.name}</p>
+                <p className="text-[10px] font-black uppercase text-green-500 tracking-widest">● Online Now</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
