@@ -1,0 +1,8 @@
+{
+  "name": "Copy of Copy of Lexdan Automotive 2026 Retail Prototype",
+  "description": "A high-conversion automotive retail platform featuring AI-driven lead qualification, attribution tracking, and a premium mobile-first UX.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
