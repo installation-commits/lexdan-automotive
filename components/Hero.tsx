@@ -3,12 +3,12 @@ import { MOCK_SALESMEN } from '../constants';
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative h-[85vh] md:h-screen flex items-center overflow-hidden">
-      {/* Background Image - Black Lexus SUV Focus */}
+    <section className="relative h-[600px] flex items-center overflow-hidden">
+      {/* Background Image - User Specific Black Lexus RX */}
       <div className="absolute inset-0 z-0">
         <img 
           src="/lexus.png" 
-          alt="Black Lexus SUV" 
+          alt="Black Lexus RX" 
           className="w-full h-full object-cover object-center"
         />
         <div className="absolute inset-0 hero-gradient"></div>
