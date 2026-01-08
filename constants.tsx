@@ -19,7 +19,7 @@ export const MOCK_VEHICLES: Vehicle[] = [
     price: 31998,
     marketValue: 34500,
     mileage: '1,028',
-    image: public/prologue.png
+    image: '/prologue.png',
     oneOwner: true,
     cleanCarfax: true,
     photosCount: 34,
