@@ -125,6 +125,7 @@ const App: React.FC = () => {
           <Inventory onSave={addToGarage} />
         </section>
         
+        {/* Updated ID to 'about-us' to match Navbar link */}
         <section id="about-us">
           <AboutUs />
           <Reviews onWrite={() => handleAction('review')} />

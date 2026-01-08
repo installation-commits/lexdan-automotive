@@ -79,7 +79,8 @@ export const MOCK_VEHICLES: Vehicle[] = [
     price: 34500,
     marketValue: 36000,
     mileage: '12,450',
-    image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&q=80&w=800',
+    // Updated to high-res image
+    image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&q=80&w=1600',
     oneOwner: true,
     cleanCarfax: true,
     photosCount: 22,
@@ -109,7 +110,8 @@ export const MOCK_VEHICLES: Vehicle[] = [
     price: 26997,
     marketValue: 28500,
     mileage: '25,360',
-    image: 'https://images.unsplash.com/photo-1621348880650-f864194c7764?auto=format&fit=crop&q=80&w=800',
+    // Updated to high-res image
+    image: 'https://images.unsplash.com/photo-1621348880650-f864194c7764?auto=format&fit=crop&q=80&w=1600',
     oneOwner: true,
     cleanCarfax: true,
     photosCount: 33,
