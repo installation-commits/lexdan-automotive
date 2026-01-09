@@ -7,108 +7,90 @@ interface FinancingProps {
 }
 
 const Financing: React.FC<FinancingProps> = ({ utmParams }) => {
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [mileage, setMileage] = useState('');
+  const [upsellActive, setUpsellActive] = useState(false);
 
-  const trafficData = [
-    { label: '9AM', value: 20 },
-    { label: '11AM', value: 60 },
-    { label: '1PM', value: 100 },
-    { label: '3PM', value: 80 },
-    { label: '5PM', value: 40 },
-  ];
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    // Simulate submission delay for UX
-    setTimeout(() => {
-      setIsLoading(false);
-      setIsSubmitted(true);
-      // In a real Netlify deployment, the form submits natively or via fetch
-    }, 1500);
-  };
+  const isWarrantyEligible = mileage && parseInt(mileage) < 70000;
 
   return (
-    <section className="py-24 bg-white overflow-hidden">
+    <section id="financing" className="py-24 bg-slate-900 border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
-          <div className="flex-1">
-            <h2 className="text-4xl md:text-6xl font-black text-[#002B5B] mb-8 leading-tight">
-              Finance for Real Life. <br/>
-              <span className="text-blue-600">No Games.</span>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          
+          <div>
+            <h2 className="text-4xl font-black text-white mb-6 uppercase tracking-tight">
+              Finance & <span className="text-[#E11D48]">Protection</span>
             </h2>
-            
-            {/* Dealership Traffic Tracker */}
-            <div className="mb-12 p-8 bg-slate-50 rounded-[32px] border border-slate-100">
-              <div className="flex justify-between items-center mb-6">
-                <h4 className="font-black text-xs uppercase tracking-widest text-[#002B5B]">Dealership Flow Tracker</h4>
-                <span className="text-[10px] font-black uppercase text-green-500 animate-pulse">Low Wait Now</span>
-              </div>
-              <div className="flex items-end justify-between h-20 space-x-2">
-                {trafficData.map(d => (
-                  <div key={d.label} className="flex-1 flex flex-col items-center">
-                    <div 
-                      className={`w-full rounded-t-lg transition-all duration-1000 ${d.value > 80 ? 'bg-red-400' : 'bg-blue-400'}`} 
-                      style={{ height: `${d.value}%` }}
-                    ></div>
-                    <span className="text-[10px] font-bold mt-2 text-slate-400">{d.label}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="text-[10px] text-slate-500 mt-4 text-center font-bold">Best time to visit today: <span className="text-[#002B5B]">Before 10:30 AM or After 4:00 PM</span></p>
-            </div>
+            <p className="text-slate-400 mb-12">
+              Simple pre-approval. No games. Protection plans designed for high-mileage imports.
+            </p>
 
-            <div className="space-y-6">
-              <div className="flex items-start space-x-4">
-                <div className="bg-blue-50 p-3 rounded-2xl text-blue-600">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg text-slate-800">Instant Pre-Approval</h4>
-                  <p className="text-slate-500">Know your buying power in seconds without affecting your credit score.</p>
-                </div>
+            <form className="bg-slate-800 p-8 rounded-3xl border border-slate-700 space-y-4">
+              <h3 className="text-lg font-black text-white mb-4">Quick Pre-Approval</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <input type="text" placeholder="First Name" className="bg-slate-900 border border-slate-600 rounded-lg p-4 text-white text-sm focus:border-blue-500 outline-none" />
+                <input type="text" placeholder="Last Name" className="bg-slate-900 border border-slate-600 rounded-lg p-4 text-white text-sm focus:border-blue-500 outline-none" />
               </div>
-            </div>
+              <input type="text" placeholder="Street Address" className="w-full bg-slate-900 border border-slate-600 rounded-lg p-4 text-white text-sm focus:border-blue-500 outline-none" />
+              <input type="password" placeholder="SSN (Encrypted)" className="w-full bg-slate-900 border border-slate-600 rounded-lg p-4 text-white text-sm focus:border-blue-500 outline-none" />
+              <button className="w-full bg-white text-slate-900 py-4 rounded-lg font-black uppercase tracking-widest hover:bg-slate-200 transition">
+                Check Rates
+              </button>
+              <p className="text-[10px] text-slate-500 text-center">Secure 256-bit SSL Connection. Soft Pull Only.</p>
+            </form>
           </div>
 
-          <div className="flex-1 w-full">
-            <div className="bg-slate-900 p-10 rounded-[40px] shadow-2xl relative">
-              {isSubmitted ? (
-                <div className="text-center py-12">
-                  <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-2">Lead Sent to CRM</h3>
-                  <p className="text-slate-400">David will reach out in <span className="text-white font-bold">&lt; 15 minutes</span>.</p>
+          <div className="space-y-8">
+            {/* Warranty Logic */}
+            <div className="bg-blue-900/20 p-8 rounded-3xl border border-blue-500/30">
+              <h3 className="text-xl font-black text-white mb-4">Coverage Eligibility</h3>
+              <div className="flex items-center space-x-4 mb-6">
+                <input 
+                  type="number" 
+                  value={mileage}
+                  onChange={(e) => setMileage(e.target.value)}
+                  placeholder="Enter Vehicle Mileage" 
+                  className="bg-slate-900 border border-slate-600 rounded-lg p-3 text-white text-sm w-48"
+                />
+              </div>
+
+              {mileage && (
+                <div className={`p-4 rounded-xl border ${isWarrantyEligible ? 'bg-green-900/20 border-green-500/50' : 'bg-slate-800 border-slate-600'}`}>
+                   {isWarrantyEligible ? (
+                     <div className="flex items-center space-x-3">
+                       <span className="text-green-500 text-xl">🛡️</span>
+                       <div>
+                         <p className="text-white font-bold text-sm">Qualified: Free 1 Month Powertrain</p>
+                         <p className="text-slate-400 text-xs">Included automatically on vehicles under 70k miles.</p>
+                       </div>
+                     </div>
+                   ) : (
+                     <p className="text-slate-400 text-xs">Mileage exceeds standard warranty limit. See extended options below.</p>
+                   )}
                 </div>
-              ) : (
-                <>
-                  <h3 className="text-2xl font-bold text-white mb-2">Quick Pre-Approval</h3>
-                  {/* Netlify Form Configuration */}
-                  <form 
-                    name="pre-approval" 
-                    method="POST" 
-                    data-netlify="true" 
-                    onSubmit={handleSubmit} 
-                    className="space-y-4 mt-6"
-                  >
-                    <input type="hidden" name="form-name" value="pre-approval" />
-                    <input type="text" name="name" placeholder="First Name" required className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-4 text-white placeholder:text-slate-500" />
-                    <input type="email" name="email" placeholder="Email Address" required className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-4 text-white placeholder:text-slate-500" />
-                    <select name="credit_score" className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-4 text-white appearance-none">
-                      <option className="text-slate-900">Estimated Credit Score</option>
-                      <option className="text-slate-900">740+ (Excellent)</option>
-                      <option className="text-slate-900">670-739 (Good)</option>
-                      <option className="text-slate-900">580-669 (Fair)</option>
-                    </select>
-                    <button type="submit" disabled={isLoading} className="w-full bg-blue-600 text-white font-black py-5 rounded-2xl shadow-xl transition transform active:scale-[0.98]">
-                      {isLoading ? 'Processing...' : 'Submit Application'}
-                    </button>
-                  </form>
-                </>
               )}
             </div>
+
+            {/* Upsell Module */}
+            <div 
+              className={`p-8 rounded-3xl border transition-all cursor-pointer ${upsellActive ? 'bg-[#E11D48] border-red-500' : 'bg-slate-800 border-slate-700 hover:border-slate-500'}`}
+              onClick={() => setUpsellActive(!upsellActive)}
+            >
+              <div className="flex justify-between items-center mb-2">
+                <h4 className={`font-black uppercase tracking-widest ${upsellActive ? 'text-white' : 'text-slate-300'}`}>Platinum Guard</h4>
+                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${upsellActive ? 'border-white bg-white text-red-600' : 'border-slate-500'}`}>
+                  {upsellActive && '✓'}
+                </div>
+              </div>
+              <p className={`text-sm mb-4 font-medium ${upsellActive ? 'text-red-100' : 'text-slate-500'}`}>
+                Extend coverage to 60mo / 120k miles. Includes roadside assistance and rental reimbursement.
+              </p>
+              <div className="flex justify-between items-end">
+                 <span className={`text-3xl font-black ${upsellActive ? 'text-white' : 'text-white'}`}>$29<span className="text-sm font-normal">/mo</span></span>
+                 <span className="text-[10px] font-black uppercase tracking-wider bg-black/20 px-2 py-1 rounded">Add to Finance</span>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

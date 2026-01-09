@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { UserProfile } from '../types';
 
@@ -21,6 +20,7 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
           
           <div className="hidden md:flex items-center space-x-6">
             <a href="#inventory" className="text-sm font-semibold text-slate-700 hover:text-blue-600 transition">Inventory</a>
+            <a href="#ai-lab" className="text-sm font-semibold text-slate-700 hover:text-blue-600 transition">AI Lab</a>
             <a href="#about-us" className="text-sm font-semibold text-slate-700 hover:text-blue-600 transition">About Us</a>
             <a href="#garage" className="text-sm font-semibold text-slate-700 hover:text-blue-600 transition flex items-center">
               Garage 
@@ -73,6 +73,7 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
             <p className="font-bold text-blue-600">{user.points.toLocaleString()} Points</p>
           </div>
           <a href="#inventory" className="block px-3 py-2 text-base font-semibold text-slate-700" onClick={() => setIsOpen(false)}>Inventory</a>
+          <a href="#ai-lab" className="block px-3 py-2 text-base font-semibold text-slate-700" onClick={() => setIsOpen(false)}>AI Lab</a>
           <a href="#about-us" className="block px-3 py-2 text-base font-semibold text-slate-700" onClick={() => setIsOpen(false)}>About Us</a>
           <a href="#garage" className="block px-3 py-2 text-base font-semibold text-slate-700" onClick={() => setIsOpen(false)}>My Garage</a>
           <a href="#financing" className="block px-3 py-2 text-base font-semibold text-slate-700" onClick={() => setIsOpen(false)}>Financing</a>

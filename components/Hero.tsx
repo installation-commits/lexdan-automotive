@@ -1,80 +1,123 @@
+
 import React, { useState } from 'react';
+import { BRANDS } from '../constants';
 
-const BRANDS = [
-  { name: 'TOYOTA', logo: 'T', image: '/prologue.png', model: '4RUNNER TRD PRO' },
-  { name: 'LEXUS', logo: 'L', image: 'https://images.unsplash.com/photo-1619682817481-e994891cd1f5?auto=format&fit=crop&q=80&w=1200', model: 'RX 500H' },
-  { name: 'HONDA', logo: 'H', image: 'https://images.unsplash.com/photo-1631114407817-293883a45c79?auto=format&fit=crop&q=80&w=1200', model: 'CR-V HYBRID' },
-];
+const Hero: React.FC = () => {
+  const [rotation, setRotation] = useState(0);
+  const [activeIdx, setActiveIdx] = useState(0);
 
-const Hero = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const nextBrand = () => setActiveIndex((prev) => (prev + 1) % BRANDS.length);
+  const rotateTo = (idx: number) => {
+    const anglePerItem = 360 / BRANDS.length;
+    const newRotation = idx * -anglePerItem;
+    setRotation(newRotation);
+    setActiveIdx(idx);
+  };
 
   return (
-    <div className="relative min-h-[85vh] bg-slate-950 flex flex-col md:flex-row items-center overflow-hidden px-6 lg:px-20 py-12">
-      {/* BACKGROUND EFFECTS */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,_#002B5B_0%,_transparent_70%)] opacity-30 pointer-events-none" />
+    <section className="relative min-h-screen bg-slate-950 flex items-center justify-center overflow-hidden">
+      {/* Background Image Layer */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=2500" 
+          alt="Toyota Tundra Background" 
+          className="w-full h-full object-cover object-center opacity-30"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-950/80 to-slate-950"></div>
+      </div>
 
-      {/* LEFT SIDE: DYNAMIC TRANSLUCENT CAROUSEL */}
-      <div className="relative w-full md:w-1/2 flex justify-center items-center h-[400px]">
-        {/* CENTER LEXDAN LOGO */}
-        <div className="z-20 w-32 h-32 rounded-full bg-white flex items-center justify-center shadow-[0_0_50px_rgba(255,255,255,0.4)]">
-          <span className="text-4xl font-black italic text-slate-900">lexdan</span>
+      {/* 1. CENTRAL HUB (THE SUN) */}
+      <div className="relative z-20 flex flex-col items-center">
+        <div className="w-48 h-48 rounded-full bg-white flex items-center justify-center shadow-[0_0_80px_rgba(255,255,255,0.4)] border-4 border-slate-100 relative group z-30 transition-transform duration-500 hover:scale-105">
+           {/* Inner Glow */}
+           <div className="absolute inset-0 bg-white rounded-full blur-md opacity-50 animate-pulse"></div>
+           <div className="relative z-10 text-center">
+              <span className="block text-4xl font-black italic text-slate-900 leading-none tracking-tighter">lexdan</span>
+              <span className="text-[10px] font-bold text-slate-400 tracking-[0.3em] uppercase">Automotive</span>
+           </div>
         </div>
 
-        {/* ORBITING TRANSLUCENT LOGOS */}
+        {/* PROJECTION DATA UNDER THE HUB */}
+        <div className="mt-20 text-center animate-in fade-in zoom-in duration-700 relative z-20">
+           <h2 className="text-white text-5xl md:text-7xl font-black uppercase italic tracking-tighter drop-shadow-2xl">
+             {BRANDS[activeIdx].name}
+           </h2>
+           <p className="text-[#E11D48] font-black tracking-[0.5em] uppercase text-sm mt-3 animate-pulse">{BRANDS[activeIdx].model}</p>
+        </div>
+      </div>
+
+      {/* 2. THE ORBITAL RING (SATURN'S RINGS) */}
+      <div 
+        className="absolute w-[600px] h-[600px] md:w-[700px] md:h-[700px] rounded-full border border-white/5 transition-transform duration-[1200ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+        style={{ transform: `rotate(${rotation}deg)` }}
+      >
+        {/* Orbit Path Visuals */}
+        <div className="absolute inset-0 rounded-full border border-white/5"></div>
+        <div className="absolute inset-4 rounded-full border border-white/5 border-dashed opacity-30"></div>
+
         {BRANDS.map((brand, idx) => {
-          const isFront = idx === activeIndex;
-          const offset = (idx - activeIndex + BRANDS.length) % BRANDS.length;
-          // Logic for position and translucency
-          const styles = [
-             "translate-y-[-140px] z-10 scale-100 opacity-100", // Front (Solid)
-             "translate-x-[140px] translate-y-[40px] z-0 scale-75 opacity-40", // Right (Translucent)
-             "translate-x-[-140px] translate-y-[40px] z-0 scale-75 opacity-40" // Left (Translucent)
-          ];
+          const angle = (idx * (360 / BRANDS.length));
+          const isActive = activeIdx === idx;
 
           return (
             <div 
-              key={brand.name}
-              className={`absolute transition-all duration-700 ease-in-out cursor-pointer ${styles[offset]}`}
-              onClick={() => setActiveIndex(idx)}
+              key={brand.id}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+              style={{ transform: `rotate(${angle}deg) translateY(-300px) md:translateY(-350px)` }}
             >
-              <div className={`w-20 h-20 rounded-full border-2 border-white/30 flex items-center justify-center font-black text-2xl text-white ${isFront ? 'bg-red-600 border-red-500 shadow-[0_0_30px_#ef4444]' : 'backdrop-blur-md'}`}>
-                {brand.logo}
-              </div>
+              {/* PLANETARY BODY (LOGO) */}
+              <button 
+                onClick={() => rotateTo(idx)}
+                style={{ transform: `rotate(-${angle + rotation}deg)` }} // Counter-rotation
+                className={`
+                  relative rounded-full flex items-center justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                  ${isActive 
+                    ? 'w-28 h-28 bg-white border-4 border-[#E11D48] scale-125 z-50 shadow-[0_0_50px_rgba(225,29,72,0.6)] opacity-100' 
+                    : 'w-20 h-20 bg-slate-800/80 border-2 border-white/10 opacity-40 blur-[1px] hover:opacity-100 hover:blur-0 hover:scale-110 hover:border-white'
+                  }
+                `}
+              >
+                <img 
+                  src={brand.logo} 
+                  alt={brand.name} 
+                  className={`object-contain transition-all duration-500 ${isActive ? 'w-16 h-16' : 'w-10 h-10 grayscale opacity-70'}`}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none'; 
+                    e.currentTarget.parentElement!.innerHTML = `<span class="text-xl font-black text-slate-900">${brand.name[0]}</span>`;
+                  }}
+                />
+              </button>
             </div>
           );
         })}
-        
-        <button onClick={nextBrand} className="absolute bottom-4 bg-white/10 hover:bg-white/20 text-white px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest border border-white/20">
-          Slide Carousel →
-        </button>
       </div>
 
-      {/* RIGHT SIDE: PROJECTION SCREEN */}
-      <div className="w-full md:w-1/2 mt-12 md:mt-0 relative">
-        <div className="relative z-10 border-l-4 border-red-600 pl-8">
-          <h2 className="text-white text-6xl font-black uppercase italic tracking-tighter leading-none mb-4">
-            {BRANDS[activeIndex].name} <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">
-              {BRANDS[activeIndex].model}
-            </span>
-          </h2>
-          <p className="text-slate-400 font-bold uppercase tracking-[0.3em] text-sm mb-8">Dynamic Projection Engine 1.0</p>
-          
-          {/* THE "HOLOGRAPHIC" IMAGE SCREEN */}
-          <div className="relative group">
-            <div className="absolute inset-0 bg-red-600 blur-[80px] opacity-20 group-hover:opacity-40 transition-opacity" />
-            <img 
-              src={BRANDS[activeIndex].image} 
-              alt="Holographic View" 
-              className="relative w-full h-[350px] object-cover rounded-2xl border border-white/10 shadow-2xl transition-all duration-500"
-            />
-          </div>
+      {/* 3. SYNCHRONIZED PROJECTION SCREEN (RIGHT) */}
+      <div className="absolute right-0 top-0 bottom-0 w-full md:w-1/2 pointer-events-none overflow-hidden hidden lg:block">
+        <div className="relative w-full h-full">
+           {/* Mask Gradient */}
+           <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent z-10"></div>
+           
+           {/* Holographic Image */}
+           <img 
+             key={activeIdx}
+             src={BRANDS[activeIdx].image} 
+             className="absolute right-0 top-1/2 -translate-y-1/2 w-full max-w-4xl object-contain opacity-40 mix-blend-screen animate-in fade-in slide-in-from-right-10 duration-1000 origin-right"
+             alt="Hologram"
+           />
+           
+           {/* Holographic Scanlines & Noise */}
+           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+           <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-20 background-size-[100%_2px,3px_100%] opacity-20"></div>
         </div>
       </div>
-    </div>
+
+      {/* ATMOSPHERIC PARTICLES */}
+      <div className="absolute w-[1000px] h-[1000px] border border-white/5 rounded-full pointer-events-none animate-[spin_120s_linear_infinite]" />
+      <div className="absolute w-[1400px] h-[1400px] border border-white/5 rounded-full pointer-events-none animate-[spin_180s_linear_infinite_reverse]" />
+      
+      {/* Background Radial Gradient */}
+      <div className="absolute inset-0 z-0 bg-radial-at-c from-blue-900/10 via-slate-950 to-slate-950 pointer-events-none"></div>
+    </section>
   );
 };
 

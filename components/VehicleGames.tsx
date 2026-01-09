@@ -8,9 +8,10 @@ interface VehicleGamesProps {
 }
 
 const VehicleGames: React.FC<VehicleGamesProps> = ({ onPlay }) => {
-  // Default to RAV4 (ID 5) vs CR-V (ID 7) for "Battle of the Imports"
+  // Default to RAV4 (ID 5) vs Ridgeline (ID 2) for "Battle of the Imports"
+  // Fixed: ID 7 and index 6 do not exist in MOCK_VEHICLES
   const [v1, setV1] = useState(MOCK_VEHICLES.find(v => v.id === '5') || MOCK_VEHICLES[0]);
-  const [v2, setV2] = useState(MOCK_VEHICLES.find(v => v.id === '7') || MOCK_VEHICLES[6]);
+  const [v2, setV2] = useState(MOCK_VEHICLES.find(v => v.id === '2') || MOCK_VEHICLES[1]);
   const [battleResult, setBattleResult] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 

@@ -4,15 +4,17 @@ export interface Vehicle {
   year: number;
   make: string;
   model: string;
+  trim: string;
+  type: string;
+  color: string;
   price: number;
   marketValue: number;
-  mileage: string;
+  mileage: number; // Changed to number for logic comparisons
   image: string;
   oneOwner: boolean;
   cleanCarfax: boolean;
-  photosCount: number;
   badges: string[];
-  maintenanceRecords?: string[];
+  commonIssues?: string; // Technical insight
 }
 
 export interface Review {
@@ -38,4 +40,12 @@ export interface UserProfile {
   points: number;
   garageIds: string[];
   tier: LoyaltyTier;
+}
+
+export interface Salesman {
+  id: string;
+  name: string;
+  role: string;
+  avatar: string;
+  schedule: Record<string, string[]>; // e.g., 'Mon': ['1:00 PM', '2:00 PM']
 }
